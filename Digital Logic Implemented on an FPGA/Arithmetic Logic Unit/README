@@ -1,0 +1,42 @@
+# Sequential Logic Counters on FPGA (Quartus II)
+
+Design, simulation, and hardware verification of **synchronous sequential logic circuits** implemented on an **Altera DE2-115 FPGA** using **Quartus II**.
+
+This project focuses on converting **formal functional requirements → Boolean logic → hardware-verified circuits**.
+
+## What this demonstrates (recruiter highlights)
+- **Sequential logic design** using JK flip-flops
+- **State diagrams, excitation tables, and K-map minimization**
+- **Hierarchical digital design** in Quartus (symbol creation + reuse)
+- **Functional simulation + hardware validation** on FPGA
+- **Pin planning & I/O mapping** to LEDs and 7-segment displays
+
+## Implemented designs
+- **3-bit synchronous Mod-6 counter**
+- **4-bit synchronous BCD counter**
+- **Modulo-60 counter** (cascaded Mod-6 + BCD)
+- **7-segment display decoders** for each counter
+
+The Mod-60 design cascades two independently verified counters using rollover logic, demonstrating modular design and reuse. :contentReference[oaicite:0]{index=0}
+
+## Design methodology
+1. Derived **state diagrams** and **excitation tables**
+2. Minimized flip-flop input equations using **K-maps**
+3. Implemented logic schematics in Quartus (.bdf)
+4. Verified behavior with **waveform simulation**
+5. Assigned FPGA pins and validated on **DE2-115 hardware**
+
+Simulation waveforms were matched directly against theoretical excitation tables to confirm correctness before hardware testing. :contentReference[oaicite:1]{index=1}
+
+## Tools & hardware
+- **Quartus II (Web Edition)**
+- **Altera DE2-115 FPGA board**
+- USB-Blaster for programming
+
+## Why this project matters
+This repo shows my ability to:
+- Translate abstract specifications into real hardware
+- Design **clocked digital systems** correctly
+- Verify logic at **both simulation and hardware levels**
+
+This is foundational work for CPU design, control units, and FPGA-based systems.
