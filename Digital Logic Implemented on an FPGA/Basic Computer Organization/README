@@ -1,0 +1,56 @@
+# 4-bit Arithmetic Logic Unit (ALU) on FPGA
+
+A fully functional **4-bit ALU** implemented on an **Altera DE2-115 FPGA** using **Quartus II**, supporting **16 arithmetic, logic, and shift operations** with real-time status flags.
+
+## What this demonstrates (recruiter highlights)
+- **Datapath design** (registers, ALU, control signals)
+- **Hierarchical hardware design** (1-bit → 4-bit → system level)
+- **Arithmetic + logic circuits** built from basic gates and full adders
+- **Status flag generation** (Overflow, Zero, Negative, Carry)
+- **Hardware-verified digital systems**
+
+## ALU capabilities
+- Operates on two **4-bit operands (A, B)**
+- Produces:
+  - **4-bit result**
+  - Status flags: **V, Z, N, Cy**
+- Supports **16 operations**, including:
+  - Addition, subtraction (1’s and 2’s complement)
+  - Increment, transfer, complement
+  - AND, OR, XOR
+  - Arithmetic shift left/right
+
+(ALU operation table derived from formal datapath design.) :contentReference[oaicite:2]{index=2}
+
+## Architecture
+- Input registers for operands A and B
+- Separate **Arithmetic Circuit (AC)** and **Logic & Shift Circuit (LSC)**
+- Multiplexed result path
+- Status logic for flag generation
+- Fully synchronous design
+
+Design was implemented hierarchically:
+- 1-bit full adder
+- 1-bit logic/shift cell
+- 4-bit arithmetic and logic blocks
+- Top-level ALU integration :contentReference[oaicite:3]{index=3}
+
+## Verification
+- Exhaustive **waveform simulation** using Quartus
+- Manual operand/control testing via FPGA slide switches
+- Output and flags displayed on LEDs
+
+Simulated outputs matched expected micro-operation results with correct clocked timing behavior. :contentReference[oaicite:4]{index=4}
+
+## Tools & hardware
+- **Quartus II**
+- **Altera DE2-115 FPGA**
+- USB-Blaster
+
+## Why this project matters
+This repo demonstrates:
+- How CPUs actually compute at the hardware level
+- Solid understanding of **datapath + control separation**
+- The ability to build complex logic systems **from first principles**
+
+This is directly applicable to processor design, digital ICs, and FPGA roles.
