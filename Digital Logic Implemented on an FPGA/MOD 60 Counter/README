@@ -1,0 +1,47 @@
+# Basic Computer Architecture Implementation (FPGA)
+
+Design and implementation of a **basic computer system** on FPGA, closely following classic CPU architecture concepts (control unit + datapath), including **instruction execution, memory access, and machine-code programming**.
+
+## What this demonstrates (recruiter highlights)
+- **CPU architecture fundamentals**
+- **Control unit design using FSMs**
+- **Datapath integration** (registers, ALU, memory, buses)
+- **Instruction fetch–decode–execute cycle**
+- **Machine-code programming & memory initialization**
+
+## System features
+- 8-bit data path
+- 256 × 8 memory (program + data)
+- Instruction Register, Program Counter, Accumulator, Data Register
+- Control Unit implemented with combinational logic + sequencing
+- Seven-segment display for memory and output visualization
+
+Architecture closely follows the classical “Basic Computer” model with adaptations for FPGA implementation. :contentReference[oaicite:5]{index=5}
+
+## Instruction set
+- **Memory-reference instructions** (direct & indirect addressing)
+  - AND, ADD, SUB, LDA, STA, BUN, ISZ
+- **Register-reference instructions**
+  - CLA, CMA, ASL, ASR, INC, HLT
+
+Programs are written directly in **machine code** and loaded using `.mif` memory initialization files. :contentReference[oaicite:6]{index=6}
+
+## Verification
+- Simulated full instruction execution using waveforms
+- Executed real programs on FPGA hardware
+- Verified correct results via accumulator and display outputs
+
+Both hardware and software paths were validated through controlled test programs. :contentReference[oaicite:7]{index=7}
+
+## Tools & hardware
+- **Quartus II**
+- **Altera DE2-115 FPGA**
+- Memory Initialization Files (.mif)
+
+## Why this project matters
+This repo shows I can:
+- Design a **complete working CPU**, not just isolated blocks
+- Understand instruction formats, control sequencing, and memory
+- Debug complex multi-cycle digital systems
+
+This is strong preparation for roles in **computer architecture, FPGA design, and digital systems engineering**.
