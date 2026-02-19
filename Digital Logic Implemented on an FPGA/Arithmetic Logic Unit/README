@@ -4,7 +4,7 @@ Design, simulation, and hardware verification of **synchronous sequential logic 
 
 This project focuses on converting **formal functional requirements → Boolean logic → hardware-verified circuits**.
 
-## What this demonstrates (recruiter highlights)
+## What this demonstrates 
 - **Sequential logic design** using JK flip-flops
 - **State diagrams, excitation tables, and K-map minimization**
 - **Hierarchical digital design** in Quartus (symbol creation + reuse)
