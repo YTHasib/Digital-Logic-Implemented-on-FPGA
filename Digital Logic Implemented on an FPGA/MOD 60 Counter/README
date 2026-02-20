@@ -1,47 +1,104 @@
-# Basic Computer Architecture Implementation (FPGA)
+# Sequential Counter System on FPGA (Quartus + Altera DE2-115)
 
-Design and implementation of a **basic computer system** on FPGA, closely following classic CPU architecture concepts (control unit + datapath), including **instruction execution, memory access, and machine-code programming**.
+## Overview
 
-## What this demonstrates (recruiter highlights)
-- **CPU architecture fundamentals**
-- **Control unit design using FSMs**
-- **Datapath integration** (registers, ALU, memory, buses)
-- **Instruction fetch–decode–execute cycle**
-- **Machine-code programming & memory initialization**
+This project implements a fully functional **Mod-60 counter system** on an Altera DE2-115 FPGA board using synchronous digital design principles.
 
-## System features
-- 8-bit data path
-- 256 × 8 memory (program + data)
-- Instruction Register, Program Counter, Accumulator, Data Register
-- Control Unit implemented with combinational logic + sequencing
-- Seven-segment display for memory and output visualization
+The system was designed from scratch in Quartus. The logic was derived using excitation tables and Karnaugh map simplifications, verified through simulation, and then deployed to hardware. The final implementation displays real-time counting values on the FPGA’s 7-segment displays.
 
-Architecture closely follows the classical “Basic Computer” model with adaptations for FPGA implementation. :contentReference[oaicite:5]{index=5}
+This project demonstrates:
 
-## Instruction set
-- **Memory-reference instructions** (direct & indirect addressing)
-  - AND, ADD, SUB, LDA, STA, BUN, ISZ
-- **Register-reference instructions**
-  - CLA, CMA, ASL, ASR, INC, HLT
+- Sequential logic design  
+- JK flip-flop based state machines  
+- Counter cascading (units and tens)  
+- Simulation-first verification  
+- FPGA pin assignment and hardware debugging  
 
-Programs are written directly in **machine code** and loaded using `.mif` memory initialization files. :contentReference[oaicite:6]{index=6}
+---
 
-## Verification
-- Simulated full instruction execution using waveforms
-- Executed real programs on FPGA hardware
-- Verified correct results via accumulator and display outputs
+## What I Built
 
-Both hardware and software paths were validated through controlled test programs. :contentReference[oaicite:7]{index=7}
+The complete system includes:
 
-## Tools & hardware
-- **Quartus II**
-- **Altera DE2-115 FPGA**
-- Memory Initialization Files (.mif)
+- 3-bit synchronous Mod-6 counter  
+- 4-bit synchronous BCD counter  
+- Cascaded Mod-60 counter (units + tens place)  
+- 7-segment display decoding logic  
+- Hardware implementation on the Altera DE2-115 board  
 
-## Why this project matters
-This repo shows I can:
-- Design a **complete working CPU**, not just isolated blocks
-- Understand instruction formats, control sequencing, and memory
-- Debug complex multi-cycle digital systems
+The Mod-60 counter increments from **00 → 59** and rolls over correctly. The rollover signal from the BCD counter is used to clock the Mod-6 counter, allowing proper tens-place incrementation.
 
-This is strong preparation for roles in **computer architecture, FPGA design, and digital systems engineering**.
+---
+
+## Design Approach
+
+Instead of relying on pre-built IP cores, I implemented the counters manually to strengthen my understanding of synchronous digital systems.
+
+The design process involved:
+
+- Creating state diagrams  
+- Developing excitation tables  
+- Minimizing logic using Karnaugh maps  
+- Implementing next-state logic using JK flip-flops  
+
+All logic equations were minimized and implemented structurally in Quartus using schematic capture.
+
+---
+
+## Simulation & Verification
+
+Before deploying to hardware, the design was validated in simulation:
+
+- Generated waveform simulations in Quartus  
+- Applied reset and count control signals  
+- Verified correct state transitions  
+- Confirmed rollover behavior at 59 → 00  
+
+This step ensured logical correctness before moving to physical implementation.
+
+---
+
+## Hardware Implementation
+
+After simulation verification:
+
+- Assigned FPGA pins using Quartus Pin Planner  
+- Connected outputs to LEDs and 7-segment displays  
+- Verified correct timing and counting behavior  
+- Debugged incorrect digit mapping issues  
+
+One issue encountered was digit swapping (e.g., 14 displaying as 41). This was traced back to incorrect pin assignments and resolved accordingly.
+
+---
+
+## Tools Used
+
+- Quartus II (Web Edition)  
+- Altera DE2-115 FPGA board  
+- USB Blaster  
+- Quartus waveform simulation tools  
+
+---
+
+## Key Learning Outcomes
+
+- Designing clean synchronous logic  
+- Understanding rollover logic in cascaded counters  
+- Applying simulation-first debugging methodology  
+- Importance of accurate FPGA pin mapping  
+- Recognizing differences between simulation and physical hardware behavior  
+
+---
+
+## Why This Project Matters
+
+This project demonstrates practical digital design experience relevant to:
+
+- FPGA development  
+- RTL design  
+- Hardware verification  
+- Embedded digital systems  
+
+It reflects the full engineering workflow:
+
+**Concept → Logic Derivation → Simulation → Hardware Implementation → Debugging**
