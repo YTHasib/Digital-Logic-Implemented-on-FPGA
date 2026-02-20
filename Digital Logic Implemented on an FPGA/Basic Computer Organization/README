@@ -1,56 +1,160 @@
-# 4-bit Arithmetic Logic Unit (ALU) on FPGA
+# Basic Computer Organization – FPGA Implementation (Quartus + Altera DE2-115)
 
-A fully functional **4-bit ALU** implemented on an **Altera DE2-115 FPGA** using **Quartus II**, supporting **16 arithmetic, logic, and shift operations** with real-time status flags.
+## Overview
 
-## What this demonstrates (recruiter highlights)
-- **Datapath design** (registers, ALU, control signals)
-- **Hierarchical hardware design** (1-bit → 4-bit → system level)
-- **Arithmetic + logic circuits** built from basic gates and full adders
-- **Status flag generation** (Overflow, Zero, Negative, Carry)
-- **Hardware-verified digital systems**
+This project implements a simplified basic computer architecture on an Altera DE2-115 FPGA board using Quartus II.
 
-## ALU capabilities
-- Operates on two **4-bit operands (A, B)**
-- Produces:
-  - **4-bit result**
-  - Status flags: **V, Z, N, Cy**
-- Supports **16 operations**, including:
-  - Addition, subtraction (1’s and 2’s complement)
-  - Increment, transfer, complement
-  - AND, OR, XOR
-  - Arithmetic shift left/right
+The system includes both hardware and software components:
 
-(ALU operation table derived from formal datapath design.) :contentReference[oaicite:2]{index=2}
+- A custom-designed control unit
+- Memory integration using a .mif file
+- Program counter and register hierarchy
+- Execution of machine-level instructions
+- Hardware waveform verification
 
-## Architecture
-- Input registers for operands A and B
-- Separate **Arithmetic Circuit (AC)** and **Logic & Shift Circuit (LSC)**
-- Multiplexed result path
-- Status logic for flag generation
-- Fully synchronous design
+The goal was to simulate and implement a functioning basic computer capable of executing machine code programs and validating correct behavior in both simulation and physical hardware.
 
-Design was implemented hierarchically:
-- 1-bit full adder
-- 1-bit logic/shift cell
-- 4-bit arithmetic and logic blocks
-- Top-level ALU integration :contentReference[oaicite:3]{index=3}
+---
 
-## Verification
-- Exhaustive **waveform simulation** using Quartus
-- Manual operand/control testing via FPGA slide switches
-- Output and flags displayed on LEDs
+## System Architecture
 
-Simulated outputs matched expected micro-operation results with correct clocked timing behavior. :contentReference[oaicite:4]{index=4}
+The design follows a hierarchical structure:
 
-## Tools & hardware
-- **Quartus II**
-- **Altera DE2-115 FPGA**
-- USB-Blaster
+- **lab3top** (Top-level module)
+- **Control Unit (lab3controller)**
+- **RAM (256x8 memory)**
+- **Seven-segment controller**
 
-## Why this project matters
-This repo demonstrates:
-- How CPUs actually compute at the hardware level
-- Solid understanding of **datapath + control separation**
-- The ability to build complex logic systems **from first principles**
+The control unit was implemented using asynchronous combinational logic derived from instruction decoding tables.
 
-This is directly applicable to processor design, digital ICs, and FPGA roles.
+---
+
+## Hardware Design
+
+The hardware portion required:
+
+- Analyzing instruction tables from the lab manual  
+- Deriving control signal expressions  
+- OR-ing relevant logic conditions  
+- Implementing combinational control logic using gates and inverters  
+
+Control signals were generated for:
+
+- Memory write  
+- Address register load  
+- Program counter load / increment  
+- Data register load  
+- Accumulator operations  
+- ALU select signals  
+- Bus control signals  
+- Halt logic  
+
+Careful attention was required to ensure only one register drives the data bus at a time.
+
+---
+
+## Software Integration
+
+Programs were written in machine code and loaded into memory using a `.mif` file.
+
+Two main programs were implemented and verified:
+
+### 1. Addition & Subtraction Program (Hardware Section)
+
+- Code loaded into `memorycontents8.mif`
+- Verified using waveform simulation
+- Example input: `80`
+- Expected output: `1A`
+- Output matched simulation and hardware results
+
+### 2. Sum-to-Zero Program (Software Section)
+
+- Program designed during pre-lab
+- Loaded into `.mif` memory file
+- Example input: `88`
+- Expected output: `72`
+- Verified through waveform and FPGA execution
+
+---
+
+## Simulation & Verification
+
+Validation was performed in two stages:
+
+### Waveform Simulation
+- Verified instruction fetch and execute cycles  
+- Confirmed correct control signal timing  
+- Checked register load and increment operations  
+- Ensured memory reads/writes occurred properly  
+
+### Hardware Testing
+- Uploaded compiled design to DE2-115  
+- Executed programs via memory initialization  
+- Observed outputs using LEDs and display interface  
+
+Errors during early testing were traced to a missing output connection for the output data register in the top-level module. Once corrected, the system executed correctly.
+
+---
+
+## Key Concepts Demonstrated
+
+- Control unit design using combinational logic  
+- Instruction decoding  
+- Program counter management  
+- Register priority logic (Reset > Load > Increment)  
+- Memory addressing and data bus control  
+- Hardware/software integration  
+- Machine code execution  
+- FPGA-based computer architecture implementation  
+
+---
+
+## Tools Used
+
+- Quartus II (Web Edition)  
+- Altera DE2-115 FPGA board  
+- USB Blaster  
+- Memory Initialization File (.mif)  
+- Waveform simulation tools  
+
+---
+
+## Debugging Lessons
+
+Key issues encountered included:
+
+- Incorrect output data register wiring  
+- Bit-order sensitivity  
+- Control signal timing errors  
+
+This project reinforced the importance of:
+
+- Verifying control logic expressions  
+- Double-checking bus arbitration  
+- Ensuring correct signal priority handling  
+- Testing both hardware and software paths independently  
+
+---
+
+## Why This Project Matters
+
+This project demonstrates understanding of:
+
+- Basic computer architecture  
+- Control unit implementation  
+- Instruction-level execution  
+- Hardware/software co-design  
+- FPGA-based system implementation  
+
+It reflects the full system-level workflow:
+
+**Architecture Design → Control Logic Derivation → Memory Programming → Simulation → Hardware Execution → Debugging**
+
+---
+
+## Future Improvements
+
+- Convert schematic design to Verilog RTL  
+- Implement pipelining or multi-cycle architecture  
+- Add automated testbench for instruction validation  
+- Expand instruction set  
