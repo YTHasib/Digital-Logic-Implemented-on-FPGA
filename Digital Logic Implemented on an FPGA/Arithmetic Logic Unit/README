@@ -1,42 +1,145 @@
-# Sequential Logic Counters on FPGA (Quartus II)
+# 4-Bit Arithmetic Logic Unit (ALU) – Quartus + Altera DE2-115
 
-Design, simulation, and hardware verification of **synchronous sequential logic circuits** implemented on an **Altera DE2-115 FPGA** using **Quartus II**.
+## Overview
 
-This project focuses on converting **formal functional requirements → Boolean logic → hardware-verified circuits**.
+This project implements a fully functional **4-bit Arithmetic Logic Unit (ALU)** on an Altera DE2-115 FPGA board using Quartus II.
 
-## What this demonstrates 
-- **Sequential logic design** using JK flip-flops
-- **State diagrams, excitation tables, and K-map minimization**
-- **Hierarchical digital design** in Quartus (symbol creation + reuse)
-- **Functional simulation + hardware validation** on FPGA
-- **Pin planning & I/O mapping** to LEDs and 7-segment displays
+The ALU performs **16 different operations** on two 4-bit operands and produces:
 
-## Implemented designs
-- **3-bit synchronous Mod-6 counter**
-- **4-bit synchronous BCD counter**
-- **Modulo-60 counter** (cascaded Mod-6 + BCD)
-- **7-segment display decoders** for each counter
+- A 4-bit result  
+- Four status flags: Overflow (V), Zero (Z), Negative (N), and Carry (Cy)  
 
-The Mod-60 design cascades two independently verified counters using rollover logic, demonstrating modular design and reuse. :contentReference[oaicite:0]{index=0}
+All inputs are manually controlled using slide switches on the FPGA board, and outputs are displayed using LEDs.
 
-## Design methodology
-1. Derived **state diagrams** and **excitation tables**
-2. Minimized flip-flop input equations using **K-maps**
-3. Implemented logic schematics in Quartus (.bdf)
-4. Verified behavior with **waveform simulation**
-5. Assigned FPGA pins and validated on **DE2-115 hardware**
+This project demonstrates complete digital system design from modular circuit construction to final hardware verification.
 
-Simulation waveforms were matched directly against theoretical excitation tables to confirm correctness before hardware testing. :contentReference[oaicite:1]{index=1}
+---
 
-## Tools & hardware
-- **Quartus II (Web Edition)**
-- **Altera DE2-115 FPGA board**
-- USB-Blaster for programming
+## Features
 
-## Why this project matters
-This repo shows my ability to:
-- Translate abstract specifications into real hardware
-- Design **clocked digital systems** correctly
-- Verify logic at **both simulation and hardware levels**
+- 16 arithmetic and logic operations  
+- 4-bit operand support  
+- Status flag generation (V, Z, N, Cy)  
+- Modular design structure  
+- Full simulation before hardware deployment  
+- FPGA pin assignment and board-level debugging  
 
-This is foundational work for CPU design, control units, and FPGA-based systems.
+---
+
+## System Architecture
+
+The ALU was built by first designing and testing individual modules, then integrating them into a final top-level system.
+
+### Modules Implemented
+
+- 4-bit Register  
+- 1-bit and 4-bit Logic & Shift Circuits (LSC)  
+- 1-bit Full Adder  
+- 1-bit and 4-bit Arithmetic Circuits  
+- ALU Status Circuit  
+- Final integrated ALU top-level module  
+
+Each module was created structurally in Quartus and compiled individually before system integration.
+
+---
+
+## Design Approach
+
+Rather than using pre-built IP cores, the ALU was constructed manually to better understand datapath and control logic.
+
+The design process included:
+
+- Designing and verifying individual combinational modules  
+- Implementing arithmetic operations using full adders  
+- Building logic and shift circuits using multiplexers  
+- Designing a status circuit to compute V, Z, N, and Carry  
+- Combining all modules into a complete ALU datapath  
+
+Selectors (S3–S0) were used to determine which operation the ALU performs.
+
+This modular approach made debugging easier and allowed validation of each component before integration.
+
+---
+
+## Simulation & Verification
+
+Before deploying to hardware, the design was tested using Quartus waveform simulations.
+
+Testing included:
+
+- Applying various operand combinations  
+- Cycling through all 16 operation selectors  
+- Verifying result outputs  
+- Confirming correct flag behavior (Overflow, Zero, Negative, Carry)  
+
+Simulation results were compared against manually predicted micro-operations to ensure correctness.
+
+Small propagation delays were observed due to register clock updates, which is expected behavior in synchronous systems.
+
+---
+
+## Hardware Implementation
+
+After simulation verification:
+
+- Assigned FPGA pins using Quartus Pin Planner  
+- Connected operand inputs to slide switches  
+- Mapped outputs and flags to LEDs  
+- Tested multiple operation cycles on hardware  
+
+### Debugging Experience
+
+An early issue caused incorrect outputs across multiple operations. After reviewing the design, the problem was traced back to incorrect bit ordering (MSB and LSB reversed).
+
+Once corrected, the ALU produced accurate results across all 16 operations.
+
+This reinforced the importance of:
+
+- Correct bit indexing  
+- Proper pin assignments  
+- Careful selector wiring  
+
+---
+
+## Tools Used
+
+- Quartus II (Web Edition)  
+- Altera DE2-115 FPGA board  
+- USB Blaster  
+- Quartus waveform simulation tools  
+
+---
+
+## Key Learning Outcomes
+
+- Designing modular digital systems  
+- Implementing arithmetic logic at the gate level  
+- Understanding datapath and control separation  
+- Generating and validating status flags  
+- Debugging bit-order and selector mapping issues  
+- Applying simulation-first validation before hardware testing  
+
+---
+
+## Why This Project Matters
+
+This ALU reflects core digital hardware skills relevant to:
+
+- FPGA development  
+- RTL design  
+- Digital system architecture  
+- Hardware verification  
+- Embedded systems  
+
+It demonstrates the complete hardware design flow:
+
+**Concept → Module Design → Simulation → System Integration → Hardware Deployment → Debugging**
+
+---
+
+## Future Improvements
+
+- Convert schematic design to Verilog for RTL-based implementation  
+- Add timing analysis and resource utilization reporting  
+- Expand to 8-bit or parameterized ALU design  
+- Add automated testbench for simulation  
